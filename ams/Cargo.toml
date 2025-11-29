@@ -1,0 +1,14 @@
+[package]
+name = "ams"
+version.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "ams-unsecure"
+path = "src/bin/ams-unsecure.rs"
+
+[dependencies]
+ams-core = { workspace = true }
+ams-tui = { workspace = true }
+tokio = { workspace = true }
+clap = { workspace = true, features = ["derive"] }

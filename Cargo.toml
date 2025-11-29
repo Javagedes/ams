@@ -1,0 +1,36 @@
+[workspace]
+resolver = "3"
+members = [ "ams","ams-core", "ams-tui"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+
+[workspace.dependencies]
+ams-core = { path = "ams-core", version = "0.1.0" }
+ams-tui = { path = "ams-tui", version = "0.1.0" }
+
+## Application dependencies ##
+clap = { version = "4", features = ["derive"] }
+ratatui = { version = "0.29.0"}
+
+## Serialization dependencies ##
+serde = { version = "1", default-features = false }
+serde_derive = { version = "1", default-features = false }
+postcard = { version = "1", default-features = false }
+
+## Async runtime dependencies ##
+tokio = { version = "1", features = ["full"] }
+tokio-util = { version = "0.7", default-features = false }
+tokio-stream = "0.1"
+futures = { version = "0.3", default-features = false }
+futures-util = { version = "0.3", default-features = false }
+bytes = "^1.5.0"
+
+
+## Cryptography dependencies ##
+x25519-dalek = "2"
+rand_core = { version = "^0.6", default-features = false } # Required for x25519-dalek dependency tree
+zeroize = { version = "^1", default-features = false } # Required for x25519-dalek dependency tree
+hkdf = "0.12"
+sha2 = "0.10"
