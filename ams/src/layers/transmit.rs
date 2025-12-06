@@ -29,7 +29,11 @@ impl super::Layer for Transmit {
 
     fn handle_incoming_frame(&mut self, frame: &mut bytes::BytesMut) -> Option<Command> {
         if let Ok(msg) = postcard::from_bytes::<Message>(frame) {
-            return Some(Command::HandleMessage(msg));
+            println!(
+                "Received message: {}",
+                String::from_utf8_lossy(&msg.payload)
+            );
+            // TODO
         };
         None
     }

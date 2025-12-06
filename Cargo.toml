@@ -1,14 +1,13 @@
 [workspace]
 resolver = "3"
-members = [ "ams","ams-core", "ams-tui"]
+members = [ "ams" ]
 
 [workspace.package]
 version = "0.1.0"
 edition = "2024"
 
 [workspace.dependencies]
-ams-core = { path = "ams-core", version = "0.1.0" }
-ams-tui = { path = "ams-tui", version = "0.1.0" }
+ams-core = { path = "ams", version = "0.1.0" }
 
 ## Application dependencies ##
 clap = { version = "4", features = ["derive"] }
