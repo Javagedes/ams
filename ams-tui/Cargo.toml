@@ -1,7 +1,0 @@
-[package]
-name = "ams-tui"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]
-ratatui = { workspace = true }

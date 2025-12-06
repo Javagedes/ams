@@ -1,14 +1,25 @@
 [package]
 name = "ams"
-version.workspace = true
-edition.workspace = true
-
-[[bin]]
-name = "ams-unsecure"
-path = "src/bin/ams-unsecure.rs"
+version = { workspace = true }
+edition = { workspace = true }
 
 [dependencies]
-ams-core = { workspace = true }
-ams-tui = { workspace = true }
+## Serialization dependencies ##
+serde = { workspace = true }
+serde_derive = { workspace = true }
+postcard = { workspace = true, features = ["alloc"] }
+
+## Async runtime dependencies ##
 tokio = { workspace = true }
-clap = { workspace = true, features = ["derive"] }
+tokio-util = { workspace = true, features = ["codec"] }
+tokio-stream = { workspace = true }
+futures ={ workspace = true, features = ["alloc"]}
+futures-util = { workspace = true, features = ["sink"] }
+bytes = { workspace = true }
+
+## Cryptography dependencies ##
+x25519-dalek = { workspace = true, features = ["zeroize"] }
+rand_core = { workspace = true, features = ["getrandom"] }
+hkdf = { workspace = true }
+sha2 = { workspace = true }
+

@@ -1,12 +1,12 @@
 //! A module for managing connections to remote AMS peers.
-use std::any::Any;
+use std::{any::Any, net::SocketAddr};
 
 use futures_util::sink::SinkExt;
 use tokio::{net::TcpStream, sync::mpsc};
 use tokio_stream::StreamExt;
 use tokio_util::codec::{Framed, LengthDelimitedCodec};
 
-use crate::{Command, api::ConnectionId, controller::Controller};
+use crate::{Command, controller::Controller};
 
 /// A connection to a remote AMS peer.
 ///
@@ -54,7 +54,7 @@ impl Connection {
     ///    [Controller::process_cmd] method.
     pub fn spawn<C: Controller>(
         stream: TcpStream,
-        id: ConnectionId,
+        addr: SocketAddr,
         manager_tx: mpsc::Sender<Command>,
     ) -> Self {
         let (tx, mut rx) = mpsc::channel(32);
@@ -77,7 +77,8 @@ impl Connection {
                     Some(cmd) = rx.recv() => {
                         if let Some(bytes) = layers.process_cmd(cmd) {
                             if framed.send(bytes.freeze()).await.is_err() {
-                                let _ = manager_tx.send(Command::Disconnect(id)).await;
+                                let _ = manager_tx.send(Command::Disconnect{ addr }).await;
+                                break;
                             }
                         }
                     }
@@ -93,7 +94,8 @@ impl Connection {
                             // Some error (or disconnect) occured. Notify the manager to clean up state and send a final
                             // disconnect message to this task.
                             Some(Err(_)) | None => {
-                                let _ = manager_tx.send(Command::Disconnect(id)).await;
+                                let _ = manager_tx.send(Command::Disconnect{ addr }).await;
+                                break;
                             }
                         }
                     }
