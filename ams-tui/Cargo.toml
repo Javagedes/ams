@@ -1,0 +1,15 @@
+[package]
+name = "ams-tui"
+version.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "ams"
+path = "src/bin/ams.rs"
+
+[dependencies]
+crossterm = { workspace = true }
+tokio = { workspace = true }
+tokio-stream = { workspace = true }
+ratatui = { workspace = true }
+ams = { workspace = true }

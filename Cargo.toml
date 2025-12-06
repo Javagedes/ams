@@ -1,13 +1,13 @@
 [workspace]
 resolver = "3"
-members = [ "ams" ]
+members = [ "ams" , "ams-tui"]
 
 [workspace.package]
 version = "0.1.0"
 edition = "2024"
 
 [workspace.dependencies]
-ams-core = { path = "ams", version = "0.1.0" }
+ams = { path = "ams", version = "0.1.0" }
 
 ## Application dependencies ##
 clap = { version = "4", features = ["derive"] }
@@ -25,6 +25,10 @@ tokio-stream = "0.1"
 futures = { version = "0.3", default-features = false }
 futures-util = { version = "0.3", default-features = false }
 bytes = "^1.5.0"
+
+# Only here to enable the "event-stream" feature. We use whatever
+# version is specified by ratatui to avoid duplicate dependencies.
+crossterm = { version = "*", features = ["event-stream"] }
 
 
 ## Cryptography dependencies ##
